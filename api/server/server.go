@@ -6,7 +6,6 @@ import (
 	"fmt"
 	"log"
 	"net/http"
-	"time"
 	"atlance/weatherapp/api/utils/fetch"
 )
 
@@ -21,41 +20,42 @@ type WeatherData struct {
 	Temperature		string	`json:"temperature"`
 }
 
-// Root Handler function
-func handler(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "Hello, World! The time is %s", time.Now().Format(time.RFC1123));
-}
-
 // Weather API Handler function
 func apiHandler(w http.ResponseWriter, r *http.Request) {
-	// Weather data object
-	wd := WeatherData {
+	
+	// Set response header and write JSON response
+	w.Header().Set("Content-Type", "application/json");
+	data := WeatherData {
 		Temperature: fetch.FetchWeatherData(),
 	}
-	
-	// JSON encode the response
-	encoder := json.NewEncoder(w);
 
-	// Encode the weather data
-	err := encoder.Encode(wd);
+	resp, err := json.Marshal(data);
 
-	// Error handling
+	// Handle errors
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError);
+		http.Error(w, "Error marshalling JSON", http.StatusInternalServerError);
+		return;
 	}
+
+	// Write response
+	w.Write(resp);
+}
+
+// Vite Handler function
+func viteHandler(w http.ResponseWriter, r *http.Request) {
+	http.ServeFile(w, r, "./frontend/dist/index.html");
 }
 
 // Start creates a new server instance
-func Start() {
+func Start(port string) {
 	// New server instance
 	s := Server {
-		Port:	":8080",
-		Home:	"/",
-		Title:	"Weather API Server",
+		Port:	fmt.Sprintf(":%v", port),
 	}
 
 	// Start server
-	http.HandleFunc("/", handler);
+	
 	http.HandleFunc("/api", apiHandler);
+	http.HandleFunc("/", viteHandler);
 	log.Fatal(http.ListenAndServe(fmt.Sprintf("%v", s.Port), nil));
 }
