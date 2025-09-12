@@ -42,7 +42,6 @@ func apiHandler(w http.ResponseWriter, r *http.Request) {
 	// Error handling
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError);
-		return;
 	}
 }
 
@@ -50,7 +49,7 @@ func apiHandler(w http.ResponseWriter, r *http.Request) {
 func Start() {
 	// New server instance
 	s := Server {
-		Port:	":80",
+		Port:	":8080",
 		Home:	"/",
 		Title:	"Weather API Server",
 	}
