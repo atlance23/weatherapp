@@ -1,3 +1,3 @@
-module github.com/atlance23/weatherapp
+module atlance/weatherapp
 
 go 1.25.1
