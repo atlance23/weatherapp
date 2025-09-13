@@ -2,7 +2,7 @@ package main
 
 // Import necessary packages
 import (
-	"atlance/weatherapp/api/server"
+	"atlance/weatherapp/internal/server"
 	"os"
 	"github.com/joho/godotenv"
 	"log"
