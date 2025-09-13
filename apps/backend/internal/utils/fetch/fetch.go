@@ -10,7 +10,7 @@ import (
 )
 
 // Variables
-const url = "https://api.weather.gov/stations/KFAM/observations/latest";
+const url = "https://api.weather.gov/stations/KSTL/observations/latest";
 
 // Data struct
 type Response struct {

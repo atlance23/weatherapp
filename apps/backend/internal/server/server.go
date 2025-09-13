@@ -36,7 +36,7 @@ func apiIndex(res http.ResponseWriter, req *http.Request) {
 	data := fetch.FetchWeatherData();
 
 	// Populate weather response struct
-	w.Location = "Farmington, MO"
+	w.Location = "St. Louis, MO"
 	w.TempC = ""
 	w.TempF = data
 	w.Condition = ""
